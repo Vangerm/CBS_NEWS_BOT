@@ -10,7 +10,8 @@ class TgBot:
 
 @dataclass
 class VkBot:
-    vk_token: str
+    token: str
+    group_id: int
 
 
 @dataclass
@@ -30,6 +31,7 @@ def load_config(path: str | None = None) -> Config:
             admin_ids=list(map(int, env.list('ADMIN_IDS')))
         ),
         vk_bot=VkBot(
-            vk_token=env('VK_TOKEN')
+            token=env('VK_TOKEN'),
+            group_id=env.int('VK_GROUP_ID')
         )
     )
