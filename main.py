@@ -1,12 +1,8 @@
 import asyncio
 import logging
-import vk_api
-
-from vk_api.longpoll import VkLongPoll, VkEventType
-# from aiogram import Bot, Dispatcher, F
-# from aiogram.filters import Command, CommandStart
-# from aiogram.types import Message, FSInputFile
+from aiogram import Bot, Dispatcher
 from config_data.config import load_config
+from handlers import user_handlers, other_handlers
 
 
 async def main() -> None:
@@ -20,30 +16,22 @@ async def main() -> None:
 
     logger.info('Starting bot')
 
+    # Получаем конфигурационные данные
     config = load_config()
 
-    # telegram_bot_token = config.tg_bot.token
-    vk_bot_token = config.vk_bot.token
-    vk_group_id = config.vk_bot.group_id
+    # Заполняем конфигурационными данными переменные
+    telegram_bot_token = config.tg_bot.token
 
-    # bot: Bot = Bot(token=telegram_bot_token)
-    # dp: Dispatcher = Dispatcher()
+    # Активация телеграмм бота
+    bot: Bot = Bot(token=telegram_bot_token)
+    dp: Dispatcher = Dispatcher()
 
-    vk_session = vk_api.VkApi(token=vk_bot_token)
+    # подключение перехвата сообщений в личку боту
+    dp.include_router(user_handlers.router)
+    dp.include_router(other_handlers.router)
 
-    vk = vk_session.get_api()
-
-    group_info = vk.wall.get(owner_id=-vk_group_id, count=1)
-    print(group_info)
-
-    # longpoll = VkLongPoll(vk_session)
-
-    # for event in longpoll.listen():
-    #     if event.type == VkEventType.WALL_POST_NEW:
-    #         print(vk.wall.get(count=1))
-
-    # await bot.delete_webhook(drop_pending_updates=True)
-    # await dp.start_polling(bot)
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
 
 
 asyncio.run(main())
