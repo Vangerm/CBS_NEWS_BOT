@@ -4,3 +4,4 @@
 /.mypy_cache
 
 test*.py
+posts.json
