@@ -1,5 +1,4 @@
 import vk_api
-import requests
 import asyncio
 from aiogram import Router, F
 from config_data.config import load_config
@@ -55,10 +54,11 @@ async def process_start_bot_command(message: Message):
 
         if vk_post['id'] != post_id:
             post_id = vk_post['id']
+            attachments = vk_post['attachments']
 
-            if len(vk_post['attachments']):
-                if vk_post['attachments'][0]['type'] == 'photo':
-                    url = vk_post['attachments'][0]['photo']['orig_photo']['url']
+            if len(attachments):
+                if attachments[0]['type'] == 'photo':
+                    url = attachments[0]['photo']['orig_photo']['url']
                 photo = URLInputFile(url)
                 await message.bot.send_photo(
                         telegram_group_id,
