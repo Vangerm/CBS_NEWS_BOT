@@ -1,10 +1,13 @@
 import vk_api
 import asyncio
+import logging
 from aiogram import Router, F
 from config_data.config import load_config
 from aiogram.types import Message, URLInputFile
 from aiogram.filters import Command, CommandStart
 
+
+logger = logging.getLogger(__name__)
 
 router = Router()
 config = load_config()
@@ -32,6 +35,7 @@ async def process_get_id_command(message: Message):
 
 @router.message(Command(commands='startbot') and F.from_user.id.in_(admin_ids))
 async def process_start_bot_command(message: Message):
+    logger.info('Start check vk news')
     telegram_group_id = config.tg_bot.group_id
     vk_bot_token = config.vk_bot.token
     vk_group_id = config.vk_bot.group_id
