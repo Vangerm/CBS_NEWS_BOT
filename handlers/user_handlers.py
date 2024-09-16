@@ -70,4 +70,4 @@ async def process_start_bot_command(message: Message):
                         telegram_group_id,
                         vk_post['text']
                     )
-        await asyncio.sleep(10)
+        await asyncio.sleep(1800)
