@@ -12,7 +12,7 @@ logging_config = {
             'class': 'logging.FileHandler',
             'filename': 'loger/logs.log',
             'mode': 'w',
-            'level': 'DEBUG',
+            'level': 'INFO',
             'formatter': 'default',
             'encoding': 'utf-8'
         }
@@ -21,7 +21,6 @@ logging_config = {
         'user_handlers': {
             'level': 'INFO',
             'handlers': ['default']
-
         },
         'other_handlers': {
             'level': 'INFO',
@@ -30,6 +29,7 @@ logging_config = {
     },
     'root': {
         'formatter': 'default',
-        'handlers': ['default']
+        'handlers': ['default'],
+        'level': 'INFO'
     }
 }
