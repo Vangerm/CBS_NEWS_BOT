@@ -11,19 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 async def main() -> None:
-    # format = '%(filename)s:%(lineno)d #%(levelname)-8s '\
-    #         '[%(asctime)s] -%(name)s - %(message)s'
-    # formatter = logging.Formatter(fmt=format)
-
-    # file_handler = logging.FileHandler('logs.log', mode='w', encoding='utf-8')
-    # file_handler.setFormatter(formatter)
-
-    # logger.addHandler(file_handler)
-
-    # logging.basicConfig(
-    #     level=logging.INFO,
-    #     format=format)
-
     logger.info('Starting bot')
 
     # Получаем конфигурационные данные

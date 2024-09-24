@@ -1,8 +1,8 @@
-main.py:27 #INFO     [2024-09-16 21:24:34,690] -__main__ - Starting bot
-dispatcher.py:527 #INFO     [2024-09-16 21:24:34,973] -aiogram.dispatcher - Start polling
-dispatcher.py:341 #INFO     [2024-09-16 21:24:35,020] -aiogram.dispatcher - Run polling for bot @CBS_tester_bot id=7246312633 - 'MrTester'
-dispatcher.py:172 #INFO     [2024-09-16 21:25:24,877] -aiogram.event - Update id=673299306 is handled. Duration 203 ms by bot id=7246312633
-user_handlers.py:38 #INFO     [2024-09-16 21:25:29,113] -handlers.user_handlers - Start check vk news
-dispatcher.py:554 #INFO     [2024-09-16 21:25:58,522] -aiogram.dispatcher - Polling stopped
-dispatcher.py:359 #INFO     [2024-09-16 21:25:58,778] -aiogram.dispatcher - Polling stopped for bot @CBS_tester_bot id=7246312633 - 'MrTester'
-dispatcher.py:172 #INFO     [2024-09-16 21:25:58,778] -aiogram.event - Update id=673299307 is not handled. Duration 29671 ms by bot id=7246312633
+main.py:27 #INFO     [2024-09-24 09:29:29,161] -__main__ - Starting bot
+dispatcher.py:527 #INFO     [2024-09-24 09:29:29,625] -aiogram.dispatcher - Start polling
+dispatcher.py:341 #INFO     [2024-09-24 09:29:29,722] -aiogram.dispatcher - Run polling for bot @CBS_tester_bot id=7246312633 - 'MrTester'
+user_handlers.py:38 #INFO     [2024-09-24 09:29:35,392] -handlers.user_handlers - Start check vk news
+dispatcher.py:455 #WARNING  [2024-09-24 09:30:07,934] -aiogram.dispatcher - Received SIGINT signal
+dispatcher.py:359 #INFO     [2024-09-24 09:30:07,935] -aiogram.dispatcher - Polling stopped for bot @CBS_tester_bot id=7246312633 - 'MrTester'
+dispatcher.py:554 #INFO     [2024-09-24 09:30:07,935] -aiogram.dispatcher - Polling stopped
+dispatcher.py:172 #INFO     [2024-09-24 09:30:08,187] -aiogram.event - Update id=673299310 is not handled. Duration 32796 ms by bot id=7246312633
