@@ -6,3 +6,5 @@
 
 test*.py
 posts.json
+
+/loger/*.log
