@@ -11,19 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 async def main() -> None:
-    # format = '%(filename)s:%(lineno)d #%(levelname)-8s '\
-    #         '[%(asctime)s] -%(name)s - %(message)s'
-    # formatter = logging.Formatter(fmt=format)
-
-    # file_handler = logging.FileHandler('logs.log', mode='w', encoding='utf-8')
-    # file_handler.setFormatter(formatter)
-
-    # logger.addHandler(file_handler)
-
-    # logging.basicConfig(
-    #     level=logging.INFO,
-    #     format=format)
-
     logger.info('Starting bot')
 
     # Получаем конфигурационные данные
@@ -35,6 +22,11 @@ async def main() -> None:
     # Активация телеграмм бота
     bot: Bot = Bot(token=telegram_bot_token)
     dp: Dispatcher = Dispatcher()
+
+    dp['telegram_group_id'] = config.tg_bot.group_id
+    dp['vk_bot_token'] = config.vk_bot.token
+    dp['vk_group_id'] = config.vk_bot.group_id
+    dp['admin_ids'] = config.tg_bot.admin_ids
 
     # подключение перехвата сообщений в личку боту
     dp.include_router(user_handlers.router)
