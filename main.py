@@ -3,7 +3,9 @@ import logging.config
 from loger.logging_settings import logging_config
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config
-from handlers import user_handlers, other_handlers
+from handlers import (user_handlers,
+                      other_handlers,
+                      admin_handlers)
 
 
 logging.config.dictConfig(logging_config)
@@ -29,6 +31,7 @@ async def main() -> None:
     dp['admin_ids'] = config.tg_bot.admin_ids
 
     # подключение перехвата сообщений в личку боту
+    dp.include_router(admin_handlers.router)
     dp.include_router(user_handlers.router)
     dp.include_router(other_handlers.router)
 
