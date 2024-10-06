@@ -4,7 +4,6 @@
 */__pycache__
 /.mypy_cache
 
-test*.py
 posts.json
 
 /loger/*.log
