@@ -2,7 +2,11 @@ import vk_api
 import asyncio
 import logging
 from aiogram import Router
-from aiogram.types import Message, FSInputFile
+from aiogram.types import (
+                            Message,
+                            FSInputFile,
+                            URLInputFile,
+                            InputMediaPhoto)
 from aiogram.filters import Command
 from filters.filters import IsAdmin
 
@@ -47,10 +51,30 @@ async def process_start_bot_command(
             attachments = vk_post['attachments']
 
             if len(attachments):
-                if attachments[0]['type'] == 'photo':
+                if len(attachments) > 1:
+                    photos = list()
+                    id_photo = True
+                    for attachment in attachments:
+                        if attachment['type'] == 'photo':
+                            url = attachment['photo']['orig_photo']['url']
+                            if id_photo:
+                                id_photo = False
+                                photos.append(InputMediaPhoto(
+                                    media=URLInputFile(url),
+                                    caption=vk_post['text']
+                                    ))
+                            else:
+                                photos.append(InputMediaPhoto(
+                                    media=URLInputFile(url)
+                                    ))
+                    await message.bot.send_media_group(
+                            telegram_group_id,
+                            photos
+                            )
+                elif attachments[0]['type'] == 'photo':
                     url = attachments[0]['photo']['orig_photo']['url']
-                photo = URLInputFile(url)
-                await message.bot.send_photo(
+                    photo = URLInputFile(url)
+                    await message.bot.send_photo(
                         telegram_group_id,
                         photo,
                         caption=vk_post['text']
