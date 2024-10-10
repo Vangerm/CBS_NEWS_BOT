@@ -1,4 +1,0 @@
-     https://oauth.vk.com/authorize?client_id=52271202&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=wall,photo,video,groups&response_type=token&v=5.131
-     https://oauth.vk.com/blank.html#access_token=vk1.a.9u5uzvd4leVjVbQuMxerpy3s1rsfS7Ee7Gp7DfIN6gBXRGcx4sYa0KmzlixUTfLTVZdE-8TO982LrkCxXkQZi1b5kZwy5WcTlSMDA99kItcFF6L57ocgQ1mBrlpGVv7Ds0Dt0HV1qc4oxAmDJALDOam6u79Uwrj_lrcicChhBtEszc3i76GXzxpJfqiAGAPLYCiwPd6ejm1PlAFtLaP3AA&expires_in=86400&user_id=10542083
-
-     f304a278f304a278f304a27888f0193a1aff304f304a27895dffdb6e49068dcc0e99dfc
