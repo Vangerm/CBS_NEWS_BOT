@@ -1,6 +1,7 @@
 /venv
 .env
 .env.work
+/.vscode
 */__pycache__
 /.mypy_cache
 

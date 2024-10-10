@@ -1,6 +1,7 @@
 import vk_api
 import asyncio
 import logging
+import requests
 from aiogram import Router
 from aiogram.types import (
                             Message,
@@ -78,6 +79,29 @@ async def process_start_bot_command(
                         telegram_group_id,
                         photo,
                         caption=vk_post['text']
+                    )
+                elif attachments[0]['type'] == 'video':
+                    owner_id = vk_post_info['items'][0]['attachments'][0]['video']['owner_id']
+                    video_id = vk_post_info['items'][0]['attachments'][0]['video']['id']
+                    access_key = vk_post_info['items'][0]['attachments'][0]['video']['access_key']
+
+                    video = vk.video.get(videos=f'{owner_id}_{video_id}_{access_key}')
+                    url = video['items'][0]['player']
+                    # url = f'https://api.vk.com/method/video.get?videos={owner_id}_{video_id}&access_token={access_key}&v=5.131'
+
+                    input_video = URLInputFile(url)
+
+                    # response = requests.get(url)
+                    # data = response.json()
+                    # if 'response' in data and len(data['response']) > 0:
+                    #     video_data = data['response'][0]
+                    #     video_url = video_data['files']['mp4']
+
+
+                    await message.bot.send_video(
+                            telegram_group_id,
+                            input_video,
+                            caption=vk_post['text']
                     )
             else:
                 await message.bot.send_message(
