@@ -1,6 +1,6 @@
 import vk_api
 # import requests
-from config_data.config import load_config
+from ..config_data.config import load_config
 
 
 config = load_config()
@@ -12,15 +12,9 @@ vk_session = vk_api.VkApi(token=vk_bot_token)
 
 vk = vk_session.get_api()
 
-post = vk.wall.get(owner_id=-223068460, count=10)
+post = vk.wall.get(owner_id=-223068460, count=3)
 
-owner_id = post["items"][-1]["attachments"][0]["video"]["owner_id"]
-video = post["items"][-1]["attachments"][0]["video"]["id"]
-access_key = post["items"][-1]["attachments"][0]["video"]['access_key']
-
-print(f'-223068460_{video}_{access_key}')
-
-print(vk.video.get(videos=f'{owner_id}_{video}_{access_key}'))
+print(post)
 
 # group_info = vk.wall.get(owner_id=-vk_group_id, count=1)
 
