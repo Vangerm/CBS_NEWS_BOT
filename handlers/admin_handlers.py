@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 
 router = Router()
 
+# async def poster():
+
 
 @router.message(Command(commands='getlog'), IsAdmin())
 async def admin_get_log_command(message: Message):
