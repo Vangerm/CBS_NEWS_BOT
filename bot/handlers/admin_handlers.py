@@ -1,5 +1,4 @@
 import vk_api
-import asyncio
 import logging
 from vk_api.bot_longpoll import (
                                 VkBotLongPoll,
@@ -11,7 +10,7 @@ from aiogram.types import (
                             URLInputFile,
                             InputMediaPhoto)
 from aiogram.filters import Command
-from filters.filters import IsAdmin
+from bot.filters.filters import IsAdmin
 
 
 logger = logging.getLogger(__name__)

@@ -1,0 +1,8 @@
+__main__.py:16 #INFO     [2024-10-25 15:54:43,115] -__main__ - Starting bot
+dispatcher.py:527 #INFO     [2024-10-25 15:54:43,630] -aiogram.dispatcher - Start polling
+dispatcher.py:341 #INFO     [2024-10-25 15:54:43,695] -aiogram.dispatcher - Run polling for bot @CBS_tester_bot id=7246312633 - 'MrTester'
+dispatcher.py:172 #INFO     [2024-10-25 15:54:55,159] -aiogram.event - Update id=673299367 is handled. Duration 296 ms by bot id=7246312633
+admin_handlers.py:95 #INFO     [2024-10-25 15:54:57,411] -bot.handlers.admin_handlers - Start check vk news
+dispatcher.py:172 #INFO     [2024-10-25 15:56:16,519] -aiogram.event - Update id=673299368 is not handled. Duration 79109 ms by bot id=7246312633
+dispatcher.py:554 #INFO     [2024-10-25 15:56:16,519] -aiogram.dispatcher - Polling stopped
+dispatcher.py:359 #INFO     [2024-10-25 15:56:16,520] -aiogram.dispatcher - Polling stopped for bot @CBS_tester_bot id=7246312633 - 'MrTester'

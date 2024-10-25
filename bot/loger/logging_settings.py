@@ -10,7 +10,7 @@ logging_config = {
     'handlers': {
         'default': {
             'class': 'logging.FileHandler',
-            'filename': 'loger/logs.log',
+            'filename': 'bot/loger/logs.log',
             'mode': 'w',
             'level': 'INFO',
             'formatter': 'default',
