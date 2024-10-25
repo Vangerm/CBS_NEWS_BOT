@@ -57,22 +57,6 @@ async def poster(
                 telegram_group_id,
                 post_text
             )
-        # elif attachments[0]['type'] == 'video':
-        #     owner_id = vk_post_info['items'][0]['attachments'][0]['video']['owner_id']
-        #     video_id = vk_post_info['items'][0]['attachments'][0]['video']['id']
-        #     access_key = vk_post_info['items'][0]['attachments'][0]['video']['access_key']
-
-        #     video = vk.video.get(videos=f'{owner_id}_{video_id}_{access_key}')
-        #     url = video['items'][0]['player']
-
-        #     input_video = URLInputFile(url)
-
-        #     await message.bot.send_video(
-        #             telegram_group_id,
-        #             input_video,
-        #             caption=vk_post['text']
-        #     )
-
     else:
         await message.bot.send_message(
             telegram_group_id,
