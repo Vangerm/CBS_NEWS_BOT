@@ -6,7 +6,7 @@ name: "automate-news"
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 
 # Задачи, которые будут выполняться в рамках флоу
 jobs:
