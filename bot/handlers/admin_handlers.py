@@ -69,6 +69,7 @@ async def admin_get_log_command(message: Message):
     await message.answer_document(FSInputFile('loger/logs.log'))
 
 
+# запуск прослушки новостей
 @router.message(Command(commands='startbot'), IsAdmin())
 async def process_start_bot_command(
                                     message: Message,
