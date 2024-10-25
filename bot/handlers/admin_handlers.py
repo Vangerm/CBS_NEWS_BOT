@@ -63,7 +63,7 @@ async def poster(
             post_text
         )
 
-
+# Получение логер файла
 @router.message(Command(commands='getlog'), IsAdmin())
 async def admin_get_log_command(message: Message):
     await message.answer_document(FSInputFile('loger/logs.log'))
