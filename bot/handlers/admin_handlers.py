@@ -18,50 +18,52 @@ logger = logging.getLogger(__name__)
 router = Router()
 
 
-async def poster(
+async def create_tg_poster(
         message: Message,
         attachments,
         post_text,
         telegram_group_id):
-    if len(attachments):
-        if len(attachments) > 1:
-            photos = list()
-            id_photo = True
-            for attachment in attachments:
-                if attachment['type'] == 'photo':
-                    url = attachment['photo']['orig_photo']['url']
-                    if id_photo:
-                        id_photo = False
-                        photos.append(InputMediaPhoto(
-                            media=URLInputFile(url),
-                            caption=post_text
-                            ))
-                    else:
-                        photos.append(InputMediaPhoto(
-                            media=URLInputFile(url)
-                            ))
-            await message.bot.send_media_group(
-                    telegram_group_id,
-                    photos
-                    )
-        elif attachments[0]['type'] == 'photo':
-            url = attachments[0]['photo']['orig_photo']['url']
-            photo = URLInputFile(url)
-            await message.bot.send_photo(
-                telegram_group_id,
-                photo,
-                caption=post_text
-            )
-        elif attachments[0]['type'] == 'video':
-            await message.bot.send_message(
-                telegram_group_id,
-                post_text
-            )
+
+    urls = list()
+    first_photo_caption = True
+
+    for attachment in attachments:
+        if attachment['type'] == 'photo':
+            url = attachment['photo']['orig_photo']['url']
+            urls.append(url)
+
+    if len(urls) == 1:
+        await message.bot.send_photo(
+            telegram_group_id,
+            URLInputFile(urls[0]),
+            caption=post_text
+        )
+
+    elif len(urls) > 1:
+        photos = list()
+
+        for url in urls:
+            if first_photo_caption:
+                photos.append(InputMediaPhoto(
+                    media=URLInputFile(url),
+                    caption=post_text
+                ))
+            else:
+                photos.append(InputMediaPhoto(
+                    media=URLInputFile(url)
+                ))
+
+        await message.bot.send_media_group(
+            telegram_group_id,
+            photos
+        )
+
     else:
         await message.bot.send_message(
             telegram_group_id,
             post_text
         )
+
 
 # Получение логер файла
 @router.message(Command(commands='getlog'), IsAdmin())
@@ -91,7 +93,7 @@ async def process_start_bot_command(
             post_text = event.obj['text']
             attachments = event.obj['attachments']
 
-            await poster(
+            await create_tg_poster(
                 message,
                 attachments,
                 post_text,
