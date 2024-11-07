@@ -1,5 +1,5 @@
 services:
   bot:
-      image: 'vangerm/cbs_news_bot:v0.2.1'
+      image: 'vangerm/cbs_news_bot:latest'
       restart: 'unless-stopped'
       env_file: '.env'
