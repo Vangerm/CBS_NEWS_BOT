@@ -18,11 +18,28 @@ logger = logging.getLogger(__name__)
 router = Router()
 
 
+async def listen_vk_group(
+        message: Message,
+        longpoll: VkBotLongPoll,
+        telegram_group_id: int
+        ):
+    for event in longpoll.listen():
+        if event.type == VkBotEventType.WALL_POST_NEW:
+            post_text = event.obj['text']
+            attachments = event.obj['attachments']
+
+            await create_tg_poster(
+                message,
+                attachments,
+                post_text,
+                telegram_group_id)
+
+
 async def create_tg_poster(
         message: Message,
-        attachments,
-        post_text,
-        telegram_group_id):
+        attachments: list,
+        post_text: str,
+        telegram_group_id: int):
 
     urls = list()
     first_photo_caption = True
@@ -88,13 +105,8 @@ async def process_start_bot_command(
 
     longpoll = VkBotLongPoll(vk_session, -vk_group_id)
 
-    for event in longpoll.listen():
-        if event.type == VkBotEventType.WALL_POST_NEW:
-            post_text = event.obj['text']
-            attachments = event.obj['attachments']
-
-            await create_tg_poster(
-                message,
-                attachments,
-                post_text,
-                telegram_group_id)
+    await listen_vk_group(
+        message,
+        longpoll,
+        telegram_group_id
+    )
