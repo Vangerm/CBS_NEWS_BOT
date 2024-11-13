@@ -1,5 +1,51 @@
-__main__.py:16 #INFO     [2024-11-12 22:50:17,057] -__main__ - Starting bot
-dispatcher.py:527 #INFO     [2024-11-12 22:50:17,312] -aiogram.dispatcher - Start polling
-dispatcher.py:341 #INFO     [2024-11-12 22:50:17,357] -aiogram.dispatcher - Run polling for bot @CBS_tester_bot id=7246312633 - 'MrTester'
-dispatcher.py:172 #INFO     [2024-11-12 22:50:21,852] -aiogram.event - Update id=673299380 is handled. Duration 187 ms by bot id=7246312633
-admin_handlers.py:99 #INFO     [2024-11-12 22:50:23,749] -bot.handlers.admin_handlers - Start check vk news
+__main__.py:16 #INFO     [2024-11-13 21:24:21,120] -__main__ - Starting bot
+dispatcher.py:527 #INFO     [2024-11-13 21:24:21,527] -aiogram.dispatcher - Start polling
+dispatcher.py:341 #INFO     [2024-11-13 21:24:21,646] -aiogram.dispatcher - Run polling for bot @CBS_tester_bot id=7246312633 - 'MrTester'
+dispatcher.py:172 #INFO     [2024-11-13 21:24:43,467] -aiogram.event - Update id=673299422 is handled. Duration 384 ms by bot id=7246312633
+admin_handlers.py:33 #INFO     [2024-11-13 21:24:47,936] -bot.handlers.admin_handlers - Start check vk news
+client.py:2127 #ERROR    [2024-11-13 21:24:47,937] -nats.aio.client - nats: encountered error
+Traceback (most recent call last):
+  File "/Users/Anton/Desktop/python_progects/cbs_news_bot/venv/lib/python3.12/site-packages/nats/aio/client.py", line 2116, in _read_loop
+    b = await self._transport.read(DEFAULT_BUFFER_SIZE)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Anton/Desktop/python_progects/cbs_news_bot/venv/lib/python3.12/site-packages/nats/aio/transport.py", line 171, in read
+    return await self._io_reader.read(buffer_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/streams.py", line 713, in read
+    await self._wait_for_data('read')
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/streams.py", line 531, in _wait_for_data
+    raise RuntimeError(
+RuntimeError: read() called while another coroutine is already waiting for incoming data
+dispatcher.py:172 #INFO     [2024-11-13 21:25:17,552] -aiogram.event - Update id=673299425 is handled. Duration 292 ms by bot id=7246312633
+dispatcher.py:172 #INFO     [2024-11-13 21:25:17,583] -aiogram.event - Update id=673299424 is handled. Duration 324 ms by bot id=7246312633
+admin_handlers.py:96 #ERROR    [2024-11-13 21:25:17,658] -bot.handlers.admin_handlers - nats: timeout
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py", line 520, in wait_for
+    return await fut
+           ^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/Anton/Desktop/python_progects/cbs_news_bot/venv/lib/python3.12/site-packages/nats/aio/client.py", line 1061, in _request_new_style
+    return await asyncio.wait_for(future, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py", line 519, in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/timeouts.py", line 115, in __aexit__
+    raise TimeoutError from exc_val
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/Anton/Desktop/python_progects/cbs_news_bot/bot/handlers/admin_handlers.py", line 86, in listen_vk_group
+    await nc.request("vk_poste", b"hi")
+  File "/Users/Anton/Desktop/python_progects/cbs_news_bot/venv/lib/python3.12/site-packages/nats/aio/client.py", line 1021, in request
+    msg = await self._request_new_style(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/Anton/Desktop/python_progects/cbs_news_bot/venv/lib/python3.12/site-packages/nats/aio/client.py", line 1063, in _request_new_style
+    raise errors.TimeoutError
+nats.errors.TimeoutError: nats: timeout

@@ -16,9 +16,15 @@ class VkBot:
 
 
 @dataclass
+class NatsConfig:
+    servers: list[str]
+
+
+@dataclass
 class Config:
     tg_bot: TgBot
     vk_bot: VkBot
+    nats: NatsConfig
 
 
 def load_config(path: str | None = None) -> Config:
@@ -35,5 +41,8 @@ def load_config(path: str | None = None) -> Config:
         vk_bot=VkBot(
             token=env('VK_TOKEN'),
             group_id=env.int('VK_GROUP_ID')
+        ),
+        nats=NatsConfig(
+            servers=env.list('NATS_SERVERS')
         )
     )
