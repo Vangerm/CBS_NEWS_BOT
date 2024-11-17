@@ -3,6 +3,8 @@ services:
   #     image: 'vangerm/cbs_news_bot:latest'
   #     restart: 'unless-stopped'
   #     env_file: '.env'
+  #     volumes:
+  #       - .loger/logs.log:/loger/logs.log
 
   nats:
     image: nats:latest

@@ -11,6 +11,7 @@ __pycache__
 
 rabbitmq_data
 nui
+nats/data
 
 posts.json
 

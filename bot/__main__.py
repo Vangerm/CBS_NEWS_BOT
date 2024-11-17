@@ -19,7 +19,7 @@ async def main() -> None:
     config = load_config()
 
     # Подключаемся к NATS
-    nc, _ = await connect_to_nats(servers=config.nats.servers)
+    # nc, js = await connect_to_nats(servers=config.nats.servers)
 
     # Заполняем конфигурационными данными переменные
     telegram_bot_token = config.tg_bot.token
@@ -32,7 +32,8 @@ async def main() -> None:
     dp['vk_bot_token'] = config.vk_bot.token
     dp['vk_group_id'] = config.vk_bot.group_id
     dp['admin_ids'] = config.tg_bot.admin_ids
-    dp['nc'] = nc
+    # dp['nc'] = nc
+    # dp['js'] = js
 
     # подключение перехвата сообщений в личку боту
     dp.include_routers(*get_routers())
@@ -44,10 +45,10 @@ async def main() -> None:
         await dp.start_polling(bot)
     except Exception as e:
         logger.exception(e)
-    finally:
+    # finally:
         # Закрываем соединение с NATS
-        await nc.close()
-        logger.info('Connection to NATS closed')
+        # await nc.close()
+        # logger.info('Connection to NATS closed')
 
 
 if __name__ == '__main__':

@@ -4,10 +4,9 @@ from vk_api.bot_longpoll import (
                                 VkBotEventType)
 
 import logging
-import signal
-# import nats
 # from nats.aio.msg import Msg
-import asyncio
+# from nats.js.api import StreamConfig
+# import asyncio
 from aiogram import Router
 from aiogram.types import (
                             Message,
@@ -23,69 +22,27 @@ logger = logging.getLogger(__name__)
 
 admin_router = Router()
 
+# async def message_hendler(msg: Msg):
+#     subject = msg.subject
+#     data = msg.data.decode()
+#     print(subject)
+#     print(data)
+
 
 async def listen_vk_group(
         message: Message,
         longpoll: VkBotLongPoll,
-        telegram_group_id: int,
-        nc
+        telegram_group_id: int
         ):
     logger.info('Start check vk news')
-
-    async def stop():
-        await asyncio.sleep(1)
-        asyncio.get_running_loop().stop()
-
-    def signal_handler():
-        if nc.is_closed:
-            return
-        print("Disconnecting...")
-        asyncio.create_task(nc.close())
-        asyncio.create_task(stop())
-
-    for sig in ("SIGINT", "SIGTERM"):
-        asyncio.get_running_loop().add_signal_handler(
-            getattr(signal, sig), signal_handler
-        )
-
-    async def disconnected_cb():
-        print("Got disconnected...")
-
-    async def reconnected_cb():
-        print("Got reconnected...")
-
-    await nc.connect(
-        "127.0.0.1",
-        reconnected_cb=reconnected_cb,
-        disconnected_cb=disconnected_cb,
-        max_reconnect_attempts=-1,
-    )
-
-    async def help_request(msg):
-        subject = msg.subject
-        data = msg.data.decode()
-        print(
-            "Received a message on '{subject}': {data}".format(
-                subject=subject, data=data
-            )
-        )
-
-    await nc.subscribe('vk_poste', 'auto_post', help_request)
-
-    # for i in range(1, 1000000):
-    #     await asyncio.sleep(60)
-    #     try:
-    #         response = await nc.request("help", b"hi")
-    #         print(response)
-    #     except Exception as e:
-    #         print("Error:", e)
 
     for event in longpoll.listen():
         if event.type == VkBotEventType.WALL_POST_NEW:
             try:
-                await nc.request("vk_poste", b"hi")
                 post_text = event.obj['text']
                 attachments = event.obj['attachments']
+
+                # await nc.request("vk_poster", post_text.encode())
 
                 await create_tg_poster(
                     message,
@@ -155,8 +112,7 @@ async def process_start_bot_command(
                                     message: Message,
                                     telegram_group_id,
                                     vk_bot_token,
-                                    vk_group_id,
-                                    nc
+                                    vk_group_id
                                     ):
 
     # подключение по токену
@@ -166,16 +122,34 @@ async def process_start_bot_command(
 
     longpoll = VkBotLongPoll(vk_session, -vk_group_id)
 
-    loop = asyncio.get_event_loop()
+    # loop = asyncio.get_event_loop()
 
-    try:
-        loop.run_until_complete(await listen_vk_group(
+    # stream_config = StreamConfig(
+    #     name="SocialMediaStream",
+    #     subjects=["vk_poster"],
+    #     retention="limits",
+    #     max_bytes=300 * 1024 * 1024,
+    #     max_msg_size=10 * 1024 * 1024,
+    #     storage="file",
+    #     allow_direct=True,
+    # )
+
+    # await js.add_stream(stream_config)
+
+    await listen_vk_group(
                         message,
                         longpoll,
-                        telegram_group_id,
-                        nc
-                        ))
-        loop.run_forever()
-        loop.close()
-    except Exception as e:
-        logger.exception(e)
+                        telegram_group_id
+                        )
+
+    # try:
+    #     loop.run_until_complete(await listen_vk_group(
+    #                     message,
+    #                     longpoll,
+    #                     telegram_group_id,
+    #                     nc
+    #                     ))
+    #     loop.run_forever()
+    #     loop.close()
+    # except Exception as e:
+    #     logger.exception(e)
