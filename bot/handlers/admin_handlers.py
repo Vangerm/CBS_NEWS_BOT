@@ -4,9 +4,8 @@ from vk_api.bot_longpoll import (
                                 VkBotEventType)
 
 import logging
-# from nats.aio.msg import Msg
 # from nats.js.api import StreamConfig
-# import asyncio
+import asyncio
 from aiogram import Router
 from aiogram.types import (
                             Message,
@@ -21,12 +20,6 @@ from bot.filters.filters import IsAdmin
 logger = logging.getLogger(__name__)
 
 admin_router = Router()
-
-# async def message_hendler(msg: Msg):
-#     subject = msg.subject
-#     data = msg.data.decode()
-#     print(subject)
-#     print(data)
 
 
 async def listen_vk_group(
