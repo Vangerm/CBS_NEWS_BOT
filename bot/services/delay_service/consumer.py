@@ -1,3 +1,4 @@
+import json
 import logging
 from contextlib import suppress
 
@@ -38,5 +39,9 @@ class VkPostConsumer:
         )
 
     async def on_vk_post(self, msg: Msg):
-        tg_group_id = msg.headers.get('Tg-group-id')
-        post_text = msg.headers.get('Tg-post-text')
+        pass
+
+    async def unsubscribe(self) -> None:
+        if self.stream_sub:
+            await self.stream_sub.unsubscribe()
+            logger.info('Consumer unsubscriber')
