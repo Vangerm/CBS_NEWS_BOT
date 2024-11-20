@@ -15,7 +15,7 @@ nats/data
 
 posts.json
 
-/loger/*.log
+/bot/loger/logs.log
 
 /test*
 /bot/test*
