@@ -19,7 +19,7 @@ admin_router = Router()
 # Получение логер файла
 @admin_router.message(Command(commands='getlog'), IsAdmin())
 async def admin_get_log_command(message: Message):
-    await message.answer_document(FSInputFile('loger/logs.log'))
+    await message.answer_document(FSInputFile('bot/loger/logs.log'))
 
 
 # запуск прослушки новостей

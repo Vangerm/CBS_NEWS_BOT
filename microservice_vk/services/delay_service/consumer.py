@@ -34,6 +34,7 @@ class VkLongPollConsumer:
         self.durable_name = durable_name
 
     async def start(self) -> None:
+        logger.info(f'Start poll vk group')
         self.stream_sub = await self.js.subscribe(
             subject=self.subject_consumer,
             stream=self.stream,
@@ -49,7 +50,7 @@ class VkLongPollConsumer:
             vk_session = vk_api.VkApi(token=payload['vk_token'])
             vk_session.get_api()
 
-            longpoll = VkBotLongPoll(vk_session, -payload['vk_group_id'])
+            longpoll = VkBotLongPoll(vk_session, -int(payload['vk_group_id']))
 
             logger.info(f'Start check vk group - {payload["vk_group_id"]}')
 

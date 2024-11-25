@@ -59,6 +59,8 @@ async def main() -> None:
             )
         )
         # await dp.start_polling(bot, _translator_hub=translator_hub)
+    except KeyboardInterrupt:
+        logger.info('Stop bot')
     except Exception as e:
         logger.exception(e)
     finally:

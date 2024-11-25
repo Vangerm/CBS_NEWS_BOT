@@ -21,16 +21,18 @@ async def main() -> None:
     nc, js = await connect_to_nats(servers=config.nats.servers)
 
     try:
-        await asyncio.gather(
-            start_get_vk_post(
-                nc=nc,
-                js=js,
-                subject_consumer=config.delayed_consumer.subject_consumer,
-                subject_publisher=config.delayed_consumer.subject_publisher,
-                stream=config.delayed_consumer.stream,
-                durable_name=config.delayed_consumer.durable_name
+        await start_get_vk_post(
+            nc=nc,
+            js=js,
+            subject_consumer=config.delayed_consumer.subject_consumer,
+            subject_publisher=config.delayed_consumer.subject_publisher,
+            stream=config.delayed_consumer.stream,
+            durable_name=config.delayed_consumer.durable_name
             )
-        )
+        while True:
+            await asyncio.sleep(1)
+    except KeyboardInterrupt:
+        logger.info('Stop microservice')
     except Exception as e:
         logger.exception(e)
     finally:
