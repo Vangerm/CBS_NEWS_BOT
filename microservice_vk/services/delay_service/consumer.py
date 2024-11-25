@@ -21,19 +21,21 @@ class VkLongPollConsumer:
             self,
             nc: Client,
             js: JetStreamContext,
-            subject: str,
+            subject_consumer: str,
+            subject_publisher: str,
             stream: str,
             durable_name: str
     ) -> None:
         self.nc = nc
         self.js = js
-        self.subject = subject
+        self.subject_consumer = subject_consumer
+        self.subject_publisher = subject_publisher
         self.stream = stream
         self.durable_name = durable_name
 
     async def start(self) -> None:
         self.stream_sub = await self.js.subscribe(
-            subject=self.subject,
+            subject=self.subject_consumer,
             stream=self.stream,
             cb=self.on_vk_longpoll,
             durable=self.durable_name,
@@ -61,10 +63,11 @@ class VkLongPollConsumer:
                                             payload['tg_group_id'],
                                             post_text,
                                             post_attachments,
-                                            'post_subject'
+                                            self.subject_publisher
                                             )
         except Exception as e:
             logger.exception(e)
+        await msg.ack()
 
     async def _get_url_attachments(self, attachments: list) -> list:
         urls = list()

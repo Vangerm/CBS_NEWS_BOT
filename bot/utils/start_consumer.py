@@ -14,15 +14,15 @@ async def start_poll_vk_posts(
         nc: Client,
         js: JetStreamContext,
         bot: Bot,
-        subject: str,
+        subject_consumer: str,
         stream: str,
         durable_name: str
-) -> None:
+        ) -> None:
     consumer = VkPostConsumer(
         nc=nc,
         js=js,
         bot=bot,
-        subject=subject,
+        subject_consumer=subject_consumer,
         stream=stream,
         durable_name=durable_name
     )

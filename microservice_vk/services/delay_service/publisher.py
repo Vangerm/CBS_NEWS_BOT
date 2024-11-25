@@ -8,7 +8,7 @@ async def vk_post_publisher(
         tg_group_id: int,
         post_text: str,
         post_attachments: list,
-        subject: str
+        subject_publisher: str
 ) -> None:
 
     payload = json.dumps({
@@ -17,4 +17,4 @@ async def vk_post_publisher(
         'post_url_attachments': post_attachments,
     }).encode()
 
-    await js.publish(subject=subject, payload=payload)
+    await js.publish(subject=subject_publisher, payload=payload)

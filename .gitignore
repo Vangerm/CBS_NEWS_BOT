@@ -16,6 +16,7 @@ nats/data
 posts.json
 
 /bot/loger/logs.log
+/microservice_vk/loger/logs.log
 
 /test*
 /bot/test*

@@ -4,10 +4,10 @@ from nats.js import JetStreamContext
 
 
 async def connect_to_nats(
-        server: list[str]
+        servers: list[str]
         ) -> tuple[Client, JetStreamContext]:
 
-    nc: Client = await nats.connect(server)
+    nc: Client = await nats.connect(servers)
     js: JetStreamContext = nc.jetstream()
 
     return nc, js

@@ -29,14 +29,15 @@ async def process_start_bot_command(
                                     tg_group_id,
                                     vk_bot_token,
                                     vk_group_id,
-                                    js
+                                    js,
+                                    subject_publisher
                                     ):
     await vk_post_publisher(
                             js=js,
                             tg_group_id=tg_group_id,
                             vk_group_id=vk_group_id,
                             vk_token=vk_bot_token,
-                            subject='some'
+                            subject=subject_publisher
     )
 
     await message.answer(text='Start check news.')
