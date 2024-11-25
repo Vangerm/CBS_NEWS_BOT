@@ -4,6 +4,9 @@ from contextlib import suppress
 
 from aiogram import Bot
 from aiogram.exceptions import TelegramBadRequest
+from aiogram.types import (
+                            URLInputFile,
+                            InputMediaPhoto)
 
 from nats.aio.client import Client
 from nats.aio.msg import Msg
@@ -39,7 +42,45 @@ class VkPostConsumer:
         )
 
     async def on_vk_post(self, msg: Msg):
-        pass
+        payload = json.loads(msg.data)
+
+        tg_group_id = payload['tg_group_id']
+        post_text = payload['post_text']
+        urls = payload['post_url_attachments']
+
+        if len(urls) == 1:
+            await self.bot.send_photo(
+                tg_group_id,
+                URLInputFile(urls[0]),
+                caption=post_text
+            )
+
+        elif len(urls) > 1:
+            photos: list = list()
+            first_photo_caption = True
+
+            for url in urls:
+                if first_photo_caption:
+                    photos.append(InputMediaPhoto(
+                        media=URLInputFile(url),
+                        caption=post_text
+                    ))
+                    first_photo_caption = False
+                else:
+                    photos.append(InputMediaPhoto(
+                        media=URLInputFile(url)
+                    ))
+
+            await self.bot.send_media_group(
+                tg_group_id,
+                photos
+            )
+
+        else:
+            await self.bot.send_message(
+                tg_group_id,
+                post_text
+            )
 
     async def unsubscribe(self) -> None:
         if self.stream_sub:

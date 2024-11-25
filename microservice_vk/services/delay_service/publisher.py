@@ -10,10 +10,6 @@ async def vk_post_publisher(
         post_attachments: list,
         subject: str
 ) -> None:
-    headers = {
-        "Content-Type": "application/json",
-        "App-Name": "VkPosterApp",
-    }
 
     payload = json.dumps({
         'tg_group_id': str(tg_group_id),
@@ -21,4 +17,4 @@ async def vk_post_publisher(
         'post_url_attachments': post_attachments,
     }).encode()
 
-    await js.publish(subject=subject, payload=payload, headers=headers)
+    await js.publish(subject=subject, payload=payload)

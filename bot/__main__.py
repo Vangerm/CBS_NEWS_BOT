@@ -19,7 +19,7 @@ async def main() -> None:
     config = load_config()
 
     # Подключаемся к NATS
-    # nc, js = await connect_to_nats(servers=config.nats.servers)
+    nc, js = await connect_to_nats(servers=config.nats.servers)
 
     # Заполняем конфигурационными данными переменные
     telegram_bot_token = config.tg_bot.token
@@ -28,12 +28,12 @@ async def main() -> None:
     bot: Bot = Bot(token=telegram_bot_token)
     dp: Dispatcher = Dispatcher()
 
-    dp['telegram_group_id'] = config.tg_bot.group_id
+    dp['tg_group_id'] = config.tg_bot.group_id
     dp['vk_bot_token'] = config.vk_bot.token
     dp['vk_group_id'] = config.vk_bot.group_id
     dp['admin_ids'] = config.tg_bot.admin_ids
-    # dp['nc'] = nc
-    # dp['js'] = js
+    dp['nc'] = nc
+    dp['js'] = js
 
     # подключение перехвата сообщений в личку боту
     dp.include_routers(*get_routers())

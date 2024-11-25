@@ -7,6 +7,8 @@ from vk_api.bot_longpoll import (
     VkBotEventType
 )
 
+from microservice_vk.services.delay_service.publisher import vk_post_publisher
+
 from nats.aio.client import Client
 from nats.aio.msg import Msg
 from nats.js import JetStreamContext
@@ -51,9 +53,27 @@ class VkLongPollConsumer:
 
             for event in longpoll.listen():
                 if event.type == VkBotEventType.WALL_POST_NEW:
-                    pass
+                    post_text = event.obj['text']
+                    post_attachments = await self._get_url_attachments(
+                                                event.obj['attachments'])
+                    await vk_post_publisher(
+                                            self.js,
+                                            payload['tg_group_id'],
+                                            post_text,
+                                            post_attachments,
+                                            'post_subject'
+                                            )
         except Exception as e:
             logger.exception(e)
+
+    async def _get_url_attachments(self, attachments: list) -> list:
+        urls = list()
+
+        for attachment in attachments:
+            if attachment['type'] == 'photo':
+                url = attachment['photo']['orig_photo']['url']
+                urls.append(url)
+        return urls
 
     async def unsubscribe(self) -> None:
         if self.stream_sub:
