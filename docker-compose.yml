@@ -1,11 +1,4 @@
 services:
-  # bot:
-  #     image: 'vangerm/cbs_news_bot:latest'
-  #     restart: 'unless-stopped'
-  #     env_file: '.env'
-  #     volumes:
-  #       - .loger/logs.log:/loger/logs.log
-
   nats:
     image: nats:latest
     entrypoint: /nats-server
@@ -26,3 +19,27 @@ services:
       - ./nui/db:/db
     depends_on:
       - nats
+
+  bot:
+    image: 'vangerm/cbs_news_bot:v0.2.2'
+    container_name: cbs_news_bot
+    restart: 'unless-stopped'
+    env_file: './bot/.env'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # volumes:
+    #   - ./bot/loger:/loger
+    depends_on:
+      - 'nats-nui'
+
+  microservice_vk:
+    image: 'vangerm/microservice:v0.1'
+    container_name: microservice
+    restart: 'unless-stopped'
+    env_file: './microservice_vk/.env'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # volumes:
+    #   - ./microservice_vk/loger:/loger
+    depends_on:
+      - 'bot'
