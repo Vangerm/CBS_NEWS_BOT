@@ -43,10 +43,12 @@ class VkPostConsumer:
 
     async def on_vk_post(self, msg: Msg):
         payload = json.loads(msg.data)
+        await msg.ack()
 
         tg_group_id = payload['tg_group_id']
         post_text = payload['post_text']
         urls = payload['post_url_attachments']
+
         with suppress(TelegramBadRequest):
             if len(urls) == 1:
                 await self.bot.send_photo(
@@ -81,7 +83,6 @@ class VkPostConsumer:
                     tg_group_id,
                     post_text
                 )
-        await msg.ack()
 
     async def unsubscribe(self) -> None:
         if self.stream_sub:

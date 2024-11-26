@@ -34,7 +34,6 @@ class VkLongPollConsumer:
         self.durable_name = durable_name
 
     async def start(self) -> None:
-        logger.info(f'Start poll vk group')
         self.stream_sub = await self.js.subscribe(
             subject=self.subject_consumer,
             stream=self.stream,
@@ -45,6 +44,7 @@ class VkLongPollConsumer:
 
     async def on_vk_longpoll(self, msg: Msg):
         payload = json.loads(msg.data)
+        await msg.ack()
 
         try:
             vk_session = vk_api.VkApi(token=payload['vk_token'])
@@ -68,7 +68,6 @@ class VkLongPollConsumer:
                                             )
         except Exception as e:
             logger.exception(e)
-        await msg.ack()
 
     async def _get_url_attachments(self, attachments: list) -> list:
         urls = list()
