@@ -33,6 +33,8 @@ class VkPostConsumer:
         self.durable_name = durable_name
 
     async def start(self) -> None:
+        # нужно так же указывать deliver_policy
+        # (all, last, new, by_start_sequence)
         self.stream_sub = await self.js.subscribe(
             subject=self.subject_consumer,
             stream=self.stream,
@@ -43,7 +45,6 @@ class VkPostConsumer:
 
     async def on_vk_post(self, msg: Msg):
         payload = json.loads(msg.data)
-        await msg.ack()
 
         tg_group_id = payload['tg_group_id']
         post_text = payload['post_text']

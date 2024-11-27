@@ -33,7 +33,10 @@ class VkLongPollConsumer:
         self.stream = stream
         self.durable_name = durable_name
 
+    # консьюмер ловящий данные групп вк и тг
     async def start(self) -> None:
+        # нужно так же указывать deliver_policy
+        # (all, last, new, by_start_sequence)
         self.stream_sub = await self.js.subscribe(
             subject=self.subject_consumer,
             stream=self.stream,
@@ -42,9 +45,9 @@ class VkLongPollConsumer:
             manual_ack=True
         )
 
+    # метод опрашивающий группу вк о новых постах
     async def on_vk_longpoll(self, msg: Msg):
         payload = json.loads(msg.data)
-        await msg.ack()
 
         try:
             vk_session = vk_api.VkApi(token=payload['vk_token'])
@@ -59,6 +62,7 @@ class VkLongPollConsumer:
                     post_text = event.obj['text']
                     post_attachments = await self._get_url_attachments(
                                                 event.obj['attachments'])
+                    # паблищер передающий данные для публикации
                     await vk_post_publisher(
                                             self.js,
                                             payload['tg_group_id'],
@@ -66,9 +70,12 @@ class VkLongPollConsumer:
                                             post_attachments,
                                             self.subject_publisher
                                             )
+        except KeyboardInterrupt:
+            logger.info('Stop check vk group')
         except Exception as e:
             logger.exception(e)
 
+    # метод собирающий ссылки на фото с поста
     async def _get_url_attachments(self, attachments: list) -> list:
         urls = list()
 
