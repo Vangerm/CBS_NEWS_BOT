@@ -26,14 +26,6 @@ async def main() -> None:
     bot: Bot = Bot(token=config.tg_bot.token)
     dp: Dispatcher = Dispatcher()
 
-    # dp['tg_group_id'] = config.tg_bot.group_id
-    # dp['vk_bot_token'] = config.vk_bot.token
-    # dp['vk_group_id'] = config.vk_bot.group_id
-    # dp['admin_ids'] = config.tg_bot.admin_ids
-    # dp['nc'] = nc
-    # dp['js'] = js
-
-    # подключение перехвата сообщений в личку боту
     dp.include_routers(*get_routers())
 
     # Запускаем polling
