@@ -10,10 +10,13 @@ __pycache__
 .mypy_cache
 
 rabbitmq_data
+nui
+nats/data
 
 posts.json
 
-/loger/*.log
+/bot/loger/logs.log
+/microservice_vk/loger/logs.log
 
 /test*
 /bot/test*
