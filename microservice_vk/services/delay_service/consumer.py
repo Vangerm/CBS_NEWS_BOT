@@ -48,6 +48,7 @@ class VkLongPollConsumer:
     # метод опрашивающий группу вк о новых постах
     async def on_vk_longpoll(self, msg: Msg):
         payload = json.loads(msg.data)
+        await msg.ack()
 
         try:
             vk_session = vk_api.VkApi(token=payload['vk_token'])

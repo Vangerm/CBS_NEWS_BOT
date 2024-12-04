@@ -45,6 +45,7 @@ class VkPostConsumer:
 
     async def on_vk_post(self, msg: Msg):
         payload = json.loads(msg.data)
+        await msg.ack()
 
         tg_group_id = payload['tg_group_id']
         post_text = payload['post_text']
