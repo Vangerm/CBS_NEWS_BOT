@@ -32,7 +32,7 @@ jobs:
           push: true
           # С каким тегом будет загружен образ
           # Переменные тоже поддерживаются
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cbs_news_bot:v0.2.3
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cbs_news_bot:v0.2.4
       -
         name: Build and push
         uses: docker/build-push-action@v6
@@ -41,4 +41,4 @@ jobs:
           push: true
           # С каким тегом будет загружен образ
           # Переменные тоже поддерживаются
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/microservice:v0.1.1
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/microservice:v0.1.2
