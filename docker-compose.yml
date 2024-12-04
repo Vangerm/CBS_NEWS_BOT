@@ -21,7 +21,7 @@ services:
       - nats
 
   bot:
-    image: 'vangerm/cbs_news_bot:v0.2.3'
+    image: 'vangerm/cbs_news_bot:v0.2.4'
     container_name: cbs_news_bot
     restart: 'unless-stopped'
     env_file: './bot/.env'
@@ -33,7 +33,7 @@ services:
       - 'nats-nui'
 
   microservice_vk:
-    image: 'vangerm/microservice:v0.1.1'
+    image: 'vangerm/microservice:v0.1.2'
     container_name: microservice
     restart: 'unless-stopped'
     env_file: './microservice_vk/.env'
