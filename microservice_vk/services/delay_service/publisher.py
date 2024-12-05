@@ -1,8 +1,10 @@
 import json
 
 from nats.js.client import JetStreamContext
+from tenacity import retry
 
 
+@retry
 async def vk_post_publisher(
         js: JetStreamContext,
         tg_group_id: int,
